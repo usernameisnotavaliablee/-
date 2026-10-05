@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>下一站：淳阳 | 2026 招新海报</title>
+  <style>
+    :root {
+      --ink: #0b0b09;
+      --ink-deep: #050505;
+      --paper: #f2ead7;
+      --paper-dim: #d8cfba;
+      --sun: #ffd91a;
+      --sun-deep: #f4bd16;
+      --orange: #f2762e;
+      --red: #e4482e;
+      --mx: 0;
+      --my: 0;
+      --ease-out: cubic-bezier(.16, 1, .3, 1);
+      --ease-spring: cubic-bezier(.32, .72, 0, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 217, 26, .08), transparent 30%),
+        #181813;
+      color: var(--paper);
+      font-family: "Avenir Next", "Futura", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+    }
+
+    .poster {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1200px;
+      height: 1600px;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        linear-gradient(135deg, rgba(242, 234, 215, .05), transparent 34%),
+        var(--ink);
+      border: 6px solid var(--paper);
+      box-shadow: 0 40px 120px rgba(5, 5, 5, .45);
+      transform: translate(-50%, -50%);
+      transform-origin: center;
+    }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(242, 234, 215, .06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(242, 234, 215, .06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .9), rgba(0, 0, 0, .22));
+      pointer-events: none;
+    }
+
+    .poster::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 30;
+      background-image:
+        radial-gradient(circle, rgba(242, 234, 215, .18) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(5, 5, 5, .22) 0 1px, transparent 1.4px);
+      background-size: 7px 7px, 11px 11px;
+      background-position: 0 0, 3px 5px;
+      opacity: .13;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    .top-strip,
+    .sun-orbit,
+    .title-block,
+    .torn-strip,
+    .directions,
+    .bottom-panel,
+    .bottom-bar,
+    .tape {
+      position: absolute;
+    }
+
+    .float {
+      transform:
+        translate3d(
+          calc(var(--mx) * var(--depth, 0) * 76px),
+          calc(var(--my) * var(--depth, 0) * 76px),
+          0
+        )
+        translateY(var(--y, 0px))
+        rotate(var(--r, 0deg));
+      will-change: transform;
+    }
+
+    .top-strip {
+      left: 44px;
+      right: 44px;
+      top: 34px;
+      z-index: 8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: "DIN Alternate", "Avenir Next", "Futura", sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .top-strip .recruit {
+      padding: 12px 18px;
+      color: var(--ink);
+      background: var(--sun);
+      border: 4px solid var(--ink-deep);
+      box-shadow: 8px 8px 0 var(--paper);
+    }
+
+    .top-strip .group {
+      padding: 12px 16px;
+      color: var(--paper);
+      border: 3px solid var(--paper);
+      background: rgba(11, 11, 9, .74);
+    }
+
+    .sun-orbit {
+      top: 84px;
+      right: -118px;
+      z-index: 2;
+      width: 690px;
+      height: 690px;
+      --depth: .06;
+      --r: 4deg;
+    }
+
+    .sun-halo {
+      position: absolute;
+      inset: 36px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255, 217, 26, .38) 0 28%, rgba(242, 118, 46, .18) 42%, transparent 68%),
+        repeating-radial-gradient(circle, rgba(242, 234, 215, .12) 0 2px, transparent 2px 16px);
+      filter: blur(.2px);
+    }
+
+    .sun-orbit img {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(18px 18px 0 rgba(5, 5, 5, .7));
+    }
+
+    .title-block {
+      left: 58px;
+      top: 142px;
+      z-index: 5;
+      width: 790px;
+      --depth: -.025;
+    }
+
+    .kicker {
+      display: inline-block;
+      padding: 10px 14px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 4px solid var(--ink-deep);
+      box-shadow: 8px 8px 0 var(--orange);
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: .14em;
+    }
+
+    .next {
+      margin: 30px 0 0;
+      font-family: "DIN Alternate", "Avenir Next", "Futura", sans-serif;
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--paper);
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-weight: 950;
+      line-height: .94;
+      letter-spacing: 0;
+    }
+
+    .stop-line {
+      display: block;
+      margin-top: 20px;
+      color: var(--paper);
+      font-size: 72px;
+      letter-spacing: .02em;
+    }
+
+    .chunyang-line {
+      display: block;
+      width: max-content;
+      margin-top: 6px;
+      padding: 6px 16px 10px 8px;
+      color: var(--ink);
+      background: var(--sun);
+      border: 5px solid var(--ink-deep);
+      box-shadow: 12px 12px 0 var(--red);
+      font-size: 136px;
+      line-height: 1;
+    }
+
+    .english-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 22px;
+      font-family: "DIN Alternate", "Avenir Next", "Futura", sans-serif;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .english-title span:first-child {
+      padding: 8px 12px;
+      color: var(--ink);
+      background: var(--paper);
+    }
+
+    .english-title span:last-child {
+      color: var(--sun);
+    }
+
+    .torn-strip {
+      left: 42px;
+      top: 650px;
+      z-index: 9;
+      width: 792px;
+      min-height: 122px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 28px;
+      padding: 24px 30px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 5px solid var(--ink-deep);
+      box-shadow: 14px 14px 0 rgba(5, 5, 5, .72);
+      clip-path: polygon(0 10%, 3% 0, 96% 3%, 100% 15%, 98% 100%, 8% 96%, 0 88%);
+      --depth: .018;
+      --r: -1.2deg;
+    }
+
+    .torn-strip strong {
+      font-size: 54px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .torn-strip span {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .directions {
+      left: 54px;
+      right: 54px;
+      top: 812px;
+      z-index: 7;
+      height: 360px;
+    }
+
+    .tile {
+      position: absolute;
+      width: 342px;
+      min-height: 326px;
+      padding: 24px 24px 22px;
+      border: 5px solid var(--ink-deep);
+      color: var(--ink);
+      transition:
+        transform 700ms var(--ease-spring),
+        box-shadow 700ms var(--ease-spring);
+    }
+
+    .tile:hover {
+      --y: calc(var(--base-y, 0px) - 12px);
+    }
+
+    .tile-software {
+      left: 0;
+      top: 18px;
+      background: var(--paper);
+      box-shadow: 14px 14px 0 var(--sun);
+      --depth: -.018;
+      --r: -1.7deg;
+      --base-y: 20px;
+      --y: var(--base-y);
+    }
+
+    .tile-hardware {
+      left: 374px;
+      top: 0;
+      background: var(--sun);
+      box-shadow: 14px 14px 0 var(--paper);
+      --depth: .024;
+      --r: 1.1deg;
+      --base-y: -10px;
+      --y: var(--base-y);
+    }
+
+    .tile-design {
+      right: 0;
+      top: 28px;
+      background: var(--orange);
+      box-shadow: 14px 14px 0 var(--red);
+      --depth: -.032;
+      --r: -1deg;
+      --base-y: 26px;
+      --y: var(--base-y);
+    }
+
+    .tile .label {
+      display: inline-block;
+      padding: 7px 10px;
+      color: var(--paper);
+      background: var(--ink);
+      font-family: "DIN Alternate", "Avenir Next", "Futura", sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .tile h2 {
+      margin: 18px 0 8px;
+      font-size: 58px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .tile p {
+      margin: 0;
+      font-size: 25px;
+      font-weight: 800;
+      line-height: 1.48;
+    }
+
+    .tile .mark {
+      position: absolute;
+      right: 18px;
+      bottom: 16px;
+      width: 54px;
+      height: 54px;
+      border: 4px solid var(--ink);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: "DIN Alternate", "Avenir Next", "Futura", sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .tape {
+      z-index: 12;
+      width: 116px;
+      height: 30px;
+      border: 3px solid rgba(5, 5, 5, .65);
+      background: rgba(255, 217, 26, .82);
+      box-shadow: 5px 5px 0 rgba(5, 5, 5, .28);
+      pointer-events: none;
+    }
+
+    .tape-1 {
+      left: 34px;
+      top: 792px;
+      --r: -9deg;
+      --depth: .02;
+    }
+
+    .tape-2 {
+      left: 676px;
+      top: 772px;
+      background: rgba(242, 234, 215, .86);
+      --r: 8deg;
+      --depth: -.024;
+    }
+
+    .tape-3 {
+      right: 76px;
+      top: 1144px;
+      background: rgba(228, 72, 46, .82);
+      --r: -7deg;
+      --depth: .03;
+    }
+
+    .bottom-panel {
+      left: 54px;
+      right: 54px;
+      top: 1210px;
+      z-index: 8;
+      height: 296px;
+      display: grid;
+      grid-template-columns: 300px 1fr 224px;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .qr-card,
+    .manifesto,
+    .route-card {
+      border: 5px solid var(--ink-deep);
+      color: var(--ink);
+    }
+
+    .qr-card {
+      padding: 16px;
+      background: var(--paper);
+      box-shadow: 14px 14px 0 var(--orange);
+      text-align: center;
+      --depth: .018;
+      --r: -1.2deg;
+    }
+
+    .qr-space {
+      position: relative;
+      width: 202px;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto 12px;
+      border: 4px dashed var(--ink);
+      background:
+        linear-gradient(45deg, rgba(11, 11, 9, .08) 25%, transparent 25% 50%, rgba(11, 11, 9, .08) 50% 75%, transparent 75%);
+      background-size: 18px 18px;
+    }
+
+    .qr-space::before,
+    .qr-space::after {
+      content: "";
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border: 5px solid var(--ink);
+    }
+
+    .qr-space::before {
+      left: 12px;
+      top: 12px;
+      border-right: 0;
+      border-bottom: 0;
+    }
+
+    .qr-space::after {
+      right: 12px;
+      bottom: 12px;
+      border-left: 0;
+      border-top: 0;
+    }
+
+    .qr-space span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: max-content;
+      padding: 6px 9px;
+      color: var(--paper);
+      background: var(--ink);
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .qr-card strong {
+      display: block;
+      font-size: 29px;
+      line-height: 1;
+    }
+
+    .manifesto {
+      position: relative;
+      padding: 24px 28px;
+      overflow: hidden;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 88% 16%, rgba(255, 217, 26, .28), transparent 28%),
+        var(--ink);
+      border-color: var(--paper);
+      box-shadow: 14px 14px 0 rgba(5, 5, 5, .65);
+      --depth: -.02;
+      --r: .7deg;
+    }
+
+    .manifesto .mini {
+      display: inline-block;
+      padding: 7px 10px;
+      color: var(--ink);
+      background: var(--sun);
+      font-family: "DIN Alternate", "Avenir Next", "Futura", sans-serif;
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .manifesto h3 {
+      margin: 16px 0 10px;
+      color: var(--sun);
+      font-size: 46px;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .manifesto p {
+      max-width: 430px;
+      margin: 0;
+      color: var(--paper);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .manifesto .sun-dot {
+      position: absolute;
+      right: 30px;
+      bottom: 26px;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: var(--sun);
+      border: 5px solid var(--ink-deep);
+      box-shadow: 8px 8px 0 var(--red);
+    }
+
+    .route-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      background: var(--sun);
+      box-shadow: 14px 14px 0 var(--paper);
+      --depth: .028;
+      --r: 1.4deg;
+    }
+
+    .route-card .top {
+      font-family: "DIN Alternate", "Avenir Next", "Futura", sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .route-card .middle {
+      font-size: 42px;
+      font-weight: 950;
+      line-height: 1.06;
+    }
+
+    .route-card .bottom {
+      padding-top: 12px;
+      border-top: 4px solid var(--ink);
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .bottom-bar {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 15;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 0 54px;
+      color: var(--ink);
+      background: var(--sun);
+      border-top: 6px solid var(--paper);
+      font-weight: 950;
+    }
+
+    .bottom-bar .year {
+      font-family: "DIN Alternate", "Avenir Next", "Futura", sans-serif;
+      font-size: 23px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .bottom-bar .notice {
+      font-size: 24px;
+      letter-spacing: .02em;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .sun-orbit img {
+        animation: sun-drift 11s var(--ease-spring) infinite alternate;
+      }
+
+      .qr-space span {
+        animation: qr-nudge 4.8s var(--ease-spring) infinite alternate;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .float {
+        transform: translateY(var(--y, 0px)) rotate(var(--r, 0deg));
+      }
+    }
+
+    @keyframes sun-drift {
+      from {
+        transform: rotate(-4deg) scale(.995);
+      }
+      to {
+        transform: rotate(5deg) scale(1.025);
+      }
+    }
+
+    @keyframes qr-nudge {
+      from {
+        transform: translate(-50%, -50%) scale(.98);
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1.03);
+      }
+    }
+
+    @media print {
+      body {
+        overflow: visible;
+        background: var(--ink);
+      }
+
+      .poster {
+        position: static;
+        transform: none !important;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="poster" aria-label="2026 淳阳项目组招新海报">
+    <div class="top-strip" aria-label="招新信息">
+      <div class="recruit">2026 Recruitment</div>
+      <div class="group">Chunyang Project Group</div>
+    </div>
+
+    <div class="sun-orbit float" style="--depth:.06; --r:4deg;" aria-hidden="true">
+      <div class="sun-halo"></div>
+      <picture>
+        <source srcset="poster-assets/chunyang-sun.webp" type="image/webp">
+        <img src="淳阳小太阳.png" alt="">
+      </picture>
+    </div>
+
+    <section class="title-block float" style="--depth:-.025;" aria-labelledby="poster-title">
+      <div class="kicker">项目组招新</div>
+      <div class="next">Next Stop:</div>
+      <h1 id="poster-title">
+        <span class="stop-line">下一站：</span>
+        <span class="chunyang-line">淳阳项目组</span>
+      </h1>
+      <div class="english-title" aria-label="Next Stop Chunyang">
+        <span>Next Stop</span>
+        <span>Chunyang</span>
+      </div>
+    </section>
+
+    <section class="torn-strip float" style="--depth:.018; --r:-1.2deg;" aria-label="招新口号">
+      <strong>兴趣 &gt; 经验</strong>
+      <span>不会没关系，愿意开始就好。</span>
+    </section>
+
+    <div class="tape tape-1 float" style="--depth:.02; --r:-9deg;" aria-hidden="true"></div>
+    <div class="tape tape-2 float" style="--depth:-.024; --r:8deg;" aria-hidden="true"></div>
+    <div class="tape tape-3 float" style="--depth:.03; --r:-7deg;" aria-hidden="true"></div>
+
+    <section class="directions" aria-label="招募方向">
+      <article class="tile tile-software float">
+        <div class="label">Software</div>
+        <h2>软件</h2>
+        <p>前端 / 后端<br>软件开发</p>
+        <div class="mark">01</div>
+      </article>
+
+      <article class="tile tile-hardware float">
+        <div class="label">Hardware</div>
+        <h2>硬件</h2>
+        <p>嵌入式 / 单片机<br>硬件设计</p>
+        <div class="mark">02</div>
+      </article>
+
+      <article class="tile tile-design float">
+        <div class="label">Design</div>
+        <h2>设计</h2>
+        <p>三维建模 / 剪辑特效<br>UI设计</p>
+        <div class="mark">03</div>
+      </article>
+    </section>
+
+    <section class="bottom-panel" aria-label="报名入口">
+      <div class="qr-card float" style="--depth:.018; --r:-1.2deg;">
+        <div class="qr-space" role="img" aria-label="二维码占位，后续替换为正式二维码">
+          <span>二维码占位 1:1</span>
+        </div>
+        <strong>扫码上车</strong>
+      </div>
+
+      <div class="manifesto float" style="--depth:-.02; --r:.7deg;">
+        <div class="mini">Boarding Note</div>
+        <h3>把好奇心带到太阳下。</h3>
+        <p>一起写代码、焊电路、做设计，把想法做成能运转的东西。</p>
+        <div class="sun-dot" aria-hidden="true"></div>
+      </div>
+
+      <div class="route-card float" style="--depth:.028; --r:1.4deg;">
+        <div class="top">Open Route</div>
+        <div class="middle">愿意开始<br>就是车票</div>
+        <div class="bottom">软件 / 硬件 / 设计<br>三个方向同时开放</div>
+      </div>
+    </section>
+
+    <footer class="bottom-bar">
+      <div class="year">2026 Recruitment</div>
+      <div class="notice">宣讲时间与地点：群内通知</div>
+    </footer>
+  </main>
+
+  <script>
+    const stage = document.querySelector('.poster');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function fitPoster() {
+      const scale = Math.min(window.innerWidth / 1200, window.innerHeight / 1600);
+      stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+
+    fitPoster();
+    window.addEventListener('resize', fitPoster, { passive: true });
+
+    if (window.matchMedia('(pointer: fine)').matches && !reduceMotion.matches) {
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+
+      window.addEventListener('pointermove', (event) => {
+        targetX = (event.clientX / window.innerWidth - .5) * 2;
+        targetY = (event.clientY / window.innerHeight - .5) * 2;
+      }, { passive: true });
+
+      function drift() {
+        currentX += (targetX - currentX) * .055;
+        currentY += (targetY - currentY) * .055;
+        document.documentElement.style.setProperty('--mx', currentX.toFixed(4));
+        document.documentElement.style.setProperty('--my', currentY.toFixed(4));
+        requestAnimationFrame(drift);
+      }
+
+      drift();
+    }
+  </script>
+</body>
+</html>
